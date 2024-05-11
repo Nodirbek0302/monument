@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @Getter
@@ -20,7 +21,7 @@ public class Monument {
     Long id;
     String nameUz;
     String nameEng;
-    String buildAt;
+    LocalDate buildAt;
     String lon;
     String lat;
     String descriptionUz;

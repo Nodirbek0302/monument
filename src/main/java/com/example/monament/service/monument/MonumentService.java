@@ -6,6 +6,7 @@ import com.example.monament.enums.MonumentRegion;
 import com.example.monament.model.Monument;
 import org.springframework.data.domain.Page;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -20,4 +21,5 @@ public interface MonumentService {
 
     ApiResult<List<Monument>> all();
 
+    ApiResult<List<Monument>> getByYears(LocalDate s, LocalDate s1);
 }

@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,13 +49,19 @@ public class MonumentServiceImpl implements MonumentService {
 
     @Override
     public ApiResult<Monument> getById(Long id) {
-        return ApiResult.successResponse(monumentRepository.findById(id).orElseThrow(() -> RestException.restThrow("not found",HttpStatus.BAD_REQUEST)));
+        Monument monument = monumentRepository.findById(id).orElseThrow(() -> RestException.restThrow("not found", HttpStatus.BAD_REQUEST));
+        monument.setAttachments(getAttachment(monument.getAttachments()));
+        return ApiResult.successResponse(monument);
     }
 
     @Override
     public ApiResult<Page<Monument>> list(int page, int size, String search) {
         PageRequest pageRequest = PageRequest.of(page, size);
         Page<Monument> monuments = monumentRepository.findAllByNameEngContainingIgnoreCaseOrNameUzContainingIgnoreCase(search, search, pageRequest);
+
+        for (Monument monument : monuments) {
+            monument.setAttachments(getAttachment(monument.getAttachments()));
+        }
         return ApiResult.successResponse(monuments);
     }
 
@@ -68,12 +75,35 @@ public class MonumentServiceImpl implements MonumentService {
 
     @Override
     public ApiResult<List<Monument>> getByRegion(MonumentRegion region) {
-
-        return  ApiResult.successResponse(monumentRepository.findAllByMonumentRegion(region));
+        List<Monument> monumentRegion = monumentRepository.findAllByMonumentRegion(region);
+        for (Monument monument : monumentRegion) {
+            monument.setAttachments(getAttachment(monument.getAttachments()));
+        }
+        return  ApiResult.successResponse(monumentRegion);
     }
 
     @Override
     public ApiResult<List<Monument>> all() {
-        return ApiResult.successResponse(monumentRepository.findAll());
+        List<Monument> all = monumentRepository.findAll();
+        for (Monument monument : all) {
+            monument.setAttachments(getAttachment(monument.getAttachments()));
+        }
+        return ApiResult.successResponse(all);
+    }
+
+    private List<Attachment> getAttachment(List<Attachment> all){
+        for (Attachment attachment : all) {
+            attachment.setContentURL("attachment/"+attachment.getId()+"?view=inline");
+        }
+        return all;
+    }
+
+    @Override
+    public ApiResult<List<Monument>> getByYears(LocalDate s, LocalDate s1) {
+        List<Monument> between = monumentRepository.findAllByBuildAtBetween(s, s1);
+        for (Monument monument : between) {
+            monument.setAttachments(getAttachment(monument.getAttachments()));
+        }
+        return ApiResult.successResponse(between);
     }
 }

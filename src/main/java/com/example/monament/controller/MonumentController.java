@@ -6,12 +6,15 @@ import com.example.monament.enums.MonumentRegion;
 import com.example.monament.model.Monument;
 import com.example.monament.service.monument.MonumentService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -50,5 +53,9 @@ public class MonumentController {
     }
 
 
+    @GetMapping("/getByYearsBetween")
+    public HttpEntity<ApiResult<List<Monument>>> getYearsBetween(@Valid @NotNull LocalDate years, @NotNull LocalDate year2){
+        return ResponseEntity.ok(monumentService.getByYears(years,year2));
+    }
 
 }

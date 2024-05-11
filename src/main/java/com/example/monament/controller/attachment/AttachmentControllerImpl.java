@@ -5,6 +5,7 @@ import com.example.monament.dto.ApiResult;
 import com.example.monament.dto.AttachmentDTO;
 import com.example.monament.service.attachment.AttachmentService;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -21,5 +22,10 @@ public record AttachmentControllerImpl(AttachmentService attachmentService) impl
     @Override
     public ResponseEntity<?> downloadFile(Long id, String view, HttpServletResponse response) {
         return attachmentService.downloadFile(id, view, response);
+    }
+
+    @Override
+    public HttpEntity<ApiResult<Boolean>> delete(Long id) {
+        return attachmentService.delete(id);
     }
 }

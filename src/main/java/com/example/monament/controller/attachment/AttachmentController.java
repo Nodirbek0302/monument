@@ -3,6 +3,7 @@ package com.example.monament.controller.attachment;
 import com.example.monament.dto.ApiResult;
 import com.example.monament.dto.AttachmentDTO;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -21,4 +22,6 @@ public interface AttachmentController {
     ResponseEntity<?> downloadFile(@PathVariable Long id,
                                    @RequestParam(defaultValue = "inline") String view,
                                    HttpServletResponse response);
+    @DeleteMapping
+    HttpEntity<ApiResult<Boolean>> delete(Long id);
 }

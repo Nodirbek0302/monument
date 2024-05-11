@@ -137,7 +137,8 @@ public record AttachmentServiceImpl(AttachmentRepository attachmentRepository,
             } catch (IOException e) {
                 throw RestException.restThrow("path not found",HttpStatus.BAD_REQUEST);
             }
+            return ResponseEntity.ok(ApiResult.successResponse(true));
         }
-        return ResponseEntity.ok(ApiResult.successResponse(true));
+        return ResponseEntity.ok(ApiResult.successResponse(false));
     }
 }

@@ -25,9 +25,9 @@ public class Monument {
     LocalDate buildAt;
     String lon;
     String lat;
-    @Size(max = 1000)
+    @Size(max = 10000)
     String descriptionUz;
-    @Size(max = 1000)
+    @Size(max = 10000)
     String descriptionEng;
     @Enumerated(EnumType.STRING)
     MonumentRegion monumentRegion;

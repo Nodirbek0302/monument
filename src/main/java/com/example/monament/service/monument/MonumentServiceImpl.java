@@ -8,6 +8,7 @@ import com.example.monament.model.Attachment;
 import com.example.monament.model.Monument;
 import com.example.monament.repository.AttachmentRepository;
 import com.example.monament.repository.MonumentRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -28,6 +29,7 @@ public class MonumentServiceImpl implements MonumentService {
     private final ModelMapper mapper;
 
     @Override
+    @Transactional
     public ApiResult<Boolean> add(AddMonumentDTO addMonumentDTO) {
         List<Attachment> attachments = findAttachment(addMonumentDTO.attachments());
 

@@ -2,6 +2,7 @@ package com.example.monament.model;
 
 import com.example.monament.enums.MonumentRegion;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -24,7 +25,9 @@ public class Monument {
     LocalDate buildAt;
     String lon;
     String lat;
+    @Size(max = 1000)
     String descriptionUz;
+    @Size(max = 1000)
     String descriptionEng;
     @Enumerated(EnumType.STRING)
     MonumentRegion monumentRegion;
